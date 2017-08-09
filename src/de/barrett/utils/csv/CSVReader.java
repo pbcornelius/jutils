@@ -6,8 +6,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class CSVReader extends au.com.bytecode.opencsv.CSVReader {
-
+public class CSVReader extends com.opencsv.CSVReader {
+	
 	// CONSTANTS ----------------------------------------------------- //
 	
 	public static String DEFAULT_CHARSET = "UTF-8";
@@ -15,15 +15,11 @@ public class CSVReader extends au.com.bytecode.opencsv.CSVReader {
 	// CONSTRUCTOR --------------------------------------------------- //
 	
 	public CSVReader(String path) throws IOException {
-		super(Files.newBufferedReader(
-						Paths.get(path, new String[0]), 
-						Charset.forName(DEFAULT_CHARSET)));
+		super(Files.newBufferedReader(Paths.get(path, new String[0]), Charset.forName(DEFAULT_CHARSET)));
 	}
 	
 	public CSVReader(String path, String charset) throws IOException {
-		super(Files.newBufferedReader(
-						Paths.get(path, new String[0]), 
-						Charset.forName(charset)));
+		super(Files.newBufferedReader(Paths.get(path, new String[0]), Charset.forName(charset)));
 	}
 	
 	public CSVReader(Reader reader) {
@@ -50,13 +46,12 @@ public class CSVReader extends au.com.bytecode.opencsv.CSVReader {
 		super(reader, separator, quotechar, escape, line);
 	}
 	
-	public CSVReader(Reader reader, char separator, char quotechar, char escape, int line,
-			boolean strictQuotes) {
+	public CSVReader(Reader reader, char separator, char quotechar, char escape, int line, boolean strictQuotes) {
 		super(reader, separator, quotechar, escape, line, strictQuotes);
 	}
 	
-	public CSVReader(Reader reader, char separator, char quotechar, char escape, int line,
-			boolean strictQuotes, boolean ignoreLeadingWhiteSpace) {
+	public CSVReader(Reader reader, char separator, char quotechar, char escape, int line, boolean strictQuotes,
+			boolean ignoreLeadingWhiteSpace) {
 		super(reader, separator, quotechar, escape, line, strictQuotes, ignoreLeadingWhiteSpace);
 	}
 	

@@ -10,8 +10,8 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CSVWriter extends au.com.bytecode.opencsv.CSVWriter {
-
+public class CSVWriter extends com.opencsv.CSVWriter {
+	
 	// CONSTANTS ----------------------------------------------------- //
 	
 	public static String DEFAULT_CHARSET = "UTF-8";
@@ -19,34 +19,29 @@ public class CSVWriter extends au.com.bytecode.opencsv.CSVWriter {
 	// CONSTRUCTOR --------------------------------------------------- //
 	
 	public CSVWriter(String path) throws IOException {
-		super(Files.newBufferedWriter(
-						Paths.get(path), 
-						Charset.forName(DEFAULT_CHARSET)));
+		super(Files.newBufferedWriter(Paths.get(path), Charset.forName(DEFAULT_CHARSET)));
 	}
 	
 	public CSVWriter(String path, String charset) throws IOException {
-		super(Files.newBufferedWriter(
-						Paths.get(path), 
-						Charset.forName(charset)));
+		super(Files.newBufferedWriter(Paths.get(path), Charset.forName(charset)));
 	}
 	
 	public CSVWriter(String path, String charset, boolean append) throws IOException {
-		super(Files.newBufferedWriter(
-						Paths.get(path), 
-						Charset.forName(charset),
-						StandardOpenOption.CREATE, append && Files.exists(Paths.get(path)) ? StandardOpenOption.APPEND : StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE));
+		super(Files.newBufferedWriter(Paths.get(path),
+				Charset.forName(charset),
+				StandardOpenOption.CREATE,
+				append && Files.exists(Paths.get(path))
+						? StandardOpenOption.APPEND
+						: StandardOpenOption.TRUNCATE_EXISTING,
+				StandardOpenOption.WRITE));
 	}
 	
 	public CSVWriter(Path path) throws IOException {
-		super(Files.newBufferedWriter(
-						path, 
-						Charset.forName(DEFAULT_CHARSET)));
+		super(Files.newBufferedWriter(path, Charset.forName(DEFAULT_CHARSET)));
 	}
 	
 	public CSVWriter(Path path, String charset) throws IOException {
-		super(Files.newBufferedWriter(
-						path, 
-						Charset.forName(charset)));
+		super(Files.newBufferedWriter(path, Charset.forName(charset)));
 	}
 	
 	public CSVWriter(Writer writer) {
@@ -72,39 +67,25 @@ public class CSVWriter extends au.com.bytecode.opencsv.CSVWriter {
 	public CSVWriter(Writer writer, char separator, char quotechar, char escapechar, String lineEnd) {
 		super(writer, separator, quotechar, escapechar, lineEnd);
 	}
-
+	
 	// PUBLIC -------------------------------------------------------- //
 	
 	public void writeNext(Object... objects) {
-		super.writeNext(Arrays.stream(objects)
-				.<ArrayList<Object>>collect(
-						ArrayList<Object>::new,
-						(l, e) -> {
-							if (e instanceof Object[])
-								l.addAll(Arrays.asList((Object[]) e));
-							else
-								l.add(e);
-						},
-						(l1, l2) -> l1.addAll(l2))
-				.stream()
-						.map(String::valueOf)
-						.toArray(String[]::new));
+		super.writeNext(Arrays.stream(objects).<ArrayList<Object>>collect(ArrayList<Object>::new, (l, e) -> {
+			if (e instanceof Object[])
+				l.addAll(Arrays.asList((Object[]) e));
+			else
+				l.add(e);
+		}, (l1, l2) -> l1.addAll(l2)).stream().map(String::valueOf).toArray(String[]::new));
 	}
 	
 	public synchronized void writeNextSync(Object... objects) {
-		super.writeNext(Arrays.stream(objects)
-				.<ArrayList<Object>>collect(
-						ArrayList<Object>::new,
-						(l, e) -> {
-							if (e instanceof Object[])
-								l.addAll(Arrays.asList((Object[]) e));
-							else
-								l.add(e);
-						},
-						(l1, l2) -> l1.addAll(l2))
-				.stream()
-						.map(String::valueOf)
-						.toArray(String[]::new));
+		super.writeNext(Arrays.stream(objects).<ArrayList<Object>>collect(ArrayList<Object>::new, (l, e) -> {
+			if (e instanceof Object[])
+				l.addAll(Arrays.asList((Object[]) e));
+			else
+				l.add(e);
+		}, (l1, l2) -> l1.addAll(l2)).stream().map(String::valueOf).toArray(String[]::new));
 	}
 	
 }
