@@ -99,13 +99,33 @@ public class Utils {
 		return output;
 	}
 	
-	public static String readFile(String fileLocation, String encoding) throws IOException {
-		return StringUtils.toString(new FileInputStream(fileLocation), encoding);
+	public static Path userDirPath(String path) {
+		return Paths.get(System.getProperty("user.dir"), path);
 	}
 	
-	public static void writeFile(String fileLocation, String fileName, String encoding, String fileContent)
+	public static Path userDirPath(Path path) {
+		return Paths.get(System.getProperty("user.dir")).resolve(path);
+	}
+	
+	public static String readUTF8File(String path) throws IOException {
+		return readFile(path, "UTF-8");
+	}
+	
+	public static String readFile(String path, String encoding) throws IOException {
+		return StringUtils.toString(new FileInputStream(path), encoding);
+	}
+	
+	public static String readUTF8File(Path path) throws IOException {
+		return readFile(path, "UTF-8");
+	}
+	
+	public static String readFile(Path path, String encoding) throws IOException {
+		return StringUtils.toString(new FileInputStream(path.toFile()), encoding);
+	}
+	
+	public static void writeFile(String folder, String fileName, String encoding, String fileContent)
 			throws IOException {
-		Path dir = Files.createDirectories(FileSystems.getDefault().getPath(fileLocation));
+		Path dir = Files.createDirectories(FileSystems.getDefault().getPath(folder));
 		BufferedWriter fileWriter = Files.newBufferedWriter(dir.resolve(fileName), Charset.forName(encoding));
 		fileWriter.write(fileContent);
 		fileWriter.close();
