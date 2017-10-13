@@ -22,4 +22,9 @@ public class ClassPathUtils {
 		method.invoke(sysloader, new Object[] { u });
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static <C> C loadClass(String name) throws Exception {
+		return (C) ClassLoader.getSystemClassLoader().loadClass(name).newInstance();
+	}
+	
 }
