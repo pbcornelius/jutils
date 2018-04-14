@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class CSVReader extends com.opencsv.CSVReader {
@@ -15,11 +16,19 @@ public class CSVReader extends com.opencsv.CSVReader {
 	// CONSTRUCTOR --------------------------------------------------- //
 	
 	public CSVReader(String path) throws IOException {
-		super(Files.newBufferedReader(Paths.get(path, new String[0]), Charset.forName(DEFAULT_CHARSET)));
+		super(Files.newBufferedReader(Paths.get(path), Charset.forName(DEFAULT_CHARSET)));
 	}
 	
 	public CSVReader(String path, String charset) throws IOException {
-		super(Files.newBufferedReader(Paths.get(path, new String[0]), Charset.forName(charset)));
+		super(Files.newBufferedReader(Paths.get(path), Charset.forName(charset)));
+	}
+	
+	public CSVReader(Path path) throws IOException {
+		super(Files.newBufferedReader(path, Charset.forName(DEFAULT_CHARSET)));
+	}
+	
+	public CSVReader(Path path, String charset) throws IOException {
+		super(Files.newBufferedReader(path, Charset.forName(charset)));
 	}
 	
 	public CSVReader(Reader reader) {
