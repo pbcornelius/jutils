@@ -1,4 +1,4 @@
-package de.barrett.utils;
+package de.pbc.utils;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;

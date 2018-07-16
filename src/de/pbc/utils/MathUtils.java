@@ -1,4 +1,4 @@
-package de.barrett.utils;
+package de.pbc.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;

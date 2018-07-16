@@ -1,4 +1,4 @@
-package de.barrett.utils;
+package de.pbc.utils;
 
 public interface GenericCloneable<T> extends Cloneable {
 	

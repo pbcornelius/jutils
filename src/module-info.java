@@ -1,8 +1,8 @@
-module de.barrett.utils {
+module de.pbc.utils {
 	
-	exports de.barrett.utils;
+	exports de.pbc.utils;
 	
-	exports de.barrett.utils.csv;
+	exports de.pbc.utils.csv;
 	
 	requires java.xml;
 	
