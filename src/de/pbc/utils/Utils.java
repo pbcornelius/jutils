@@ -2,6 +2,7 @@ package de.pbc.utils;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.MalformedURLException;
@@ -107,20 +108,28 @@ public class Utils {
 		return Paths.get(System.getProperty("user.dir")).resolve(path);
 	}
 	
-	public static String readUTF8File(String path) throws IOException {
+	public static String readUTF8File(String path) {
 		return readFile(path, "UTF-8");
 	}
 	
-	public static String readFile(String path, String encoding) throws IOException {
-		return StringUtils.toString(new FileInputStream(path), encoding);
+	public static String readFile(String path, String encoding) {
+		try {
+			return StringUtils.toString(new FileInputStream(path), encoding);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
-	public static String readUTF8File(Path path) throws IOException {
+	public static String readUTF8File(Path path) {
 		return readFile(path, "UTF-8");
 	}
 	
-	public static String readFile(Path path, String encoding) throws IOException {
-		return StringUtils.toString(new FileInputStream(path.toFile()), encoding);
+	public static String readFile(Path path, String encoding) {
+		try {
+			return StringUtils.toString(new FileInputStream(path.toFile()), encoding);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public static void writeFile(String folder, String fileName, String encoding, String fileContent)
@@ -166,8 +175,8 @@ public class Utils {
 			return Stream.empty();
 		
 		int fullChunks = (size - 1) / length;
-		return IntStream.range(0, fullChunks + 1).mapToObj(n -> source.subList(n * length,
-				n == fullChunks ? size : (n + 1) * length));
+		return IntStream.range(0, fullChunks + 1)
+				.mapToObj(n -> source.subList(n * length, n == fullChunks ? size : (n + 1) * length));
 	}
 	
 	public static <E> E randomElement(Collection<? extends E> coll) {
