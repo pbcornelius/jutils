@@ -2,7 +2,6 @@ package de.pbc.utils;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.MalformedURLException;
@@ -115,7 +114,7 @@ public class Utils {
 	public static String readFile(String path, String encoding) {
 		try {
 			return StringUtils.toString(new FileInputStream(path), encoding);
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -127,7 +126,7 @@ public class Utils {
 	public static String readFile(Path path, String encoding) {
 		try {
 			return StringUtils.toString(new FileInputStream(path.toFile()), encoding);
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
