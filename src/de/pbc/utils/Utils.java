@@ -107,7 +107,7 @@ public class Utils {
 		return Paths.get(System.getProperty("user.dir")).resolve(path);
 	}
 	
-	public static String readUTF8File(String path) {
+	public static String readFile(String path) {
 		return readFile(path, "UTF-8");
 	}
 	
@@ -119,7 +119,7 @@ public class Utils {
 		}
 	}
 	
-	public static String readUTF8File(Path path) {
+	public static String readFile(Path path) {
 		return readFile(path, "UTF-8");
 	}
 	
@@ -129,6 +129,10 @@ public class Utils {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public static void writeFile(String folder, String fileName, String fileContent) throws IOException {
+		writeFile(folder, fileName, "UTF-8", fileContent);
 	}
 	
 	public static void writeFile(String folder, String fileName, String encoding, String fileContent)
