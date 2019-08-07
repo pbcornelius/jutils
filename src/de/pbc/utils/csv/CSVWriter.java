@@ -48,22 +48,6 @@ public class CSVWriter extends com.opencsv.CSVWriter {
 		super(writer);
 	}
 	
-	public CSVWriter(Writer writer, char separator) {
-		super(writer, separator);
-	}
-	
-	public CSVWriter(Writer writer, char separator, char quotechar) {
-		super(writer, separator, quotechar);
-	}
-	
-	public CSVWriter(Writer writer, char separator, char quotechar, String lineEnd) {
-		super(writer, separator, quotechar, lineEnd);
-	}
-	
-	public CSVWriter(Writer writer, char separator, char quotechar, char escapechar) {
-		super(writer, separator, quotechar, escapechar);
-	}
-	
 	public CSVWriter(Writer writer, char separator, char quotechar, char escapechar, String lineEnd) {
 		super(writer, separator, quotechar, escapechar, lineEnd);
 	}

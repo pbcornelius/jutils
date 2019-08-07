@@ -8,4 +8,6 @@ module de.pbc.utils {
 	
 	requires static opencsv;
 	
+	requires static org.apache.commons.lang3;
+	
 }
