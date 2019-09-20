@@ -9,7 +9,7 @@ import java.time.temporal.ChronoUnit;
  *   first request).
  * - The method halt() halts all future executions for the current hour.
  */
-public class HourRateCounter {
+public class HourRateCounter implements RateCounter {
 	
 	// VARIABLES ----------------------------------------------------- //
 	
@@ -33,6 +33,7 @@ public class HourRateCounter {
 	
 	// PUBLIC -------------------------------------------------------- //
 	
+	@Override
 	public synchronized void request() {
 		if (hour == null || LocalDateTime.now().isAfter(hour.plusHours(1))) {
 			reset();
@@ -60,8 +61,9 @@ public class HourRateCounter {
 		}
 	}
 	
+	@Override
 	public synchronized void halt(LocalDateTime haltAt) {
-		if (haltAt.getHour() == hour.getHour()) {
+		if (haltAt.isBefore(hour.plusHours(1))) {
 			halted = true;
 		}
 	}

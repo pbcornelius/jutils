@@ -13,7 +13,7 @@ import java.time.temporal.TemporalAdjuster;
  *   Invocations need to supply the date & time of when the incident
  *   occurred that required the halting to avoid locking future hours.
  */
-public class CalendarHourRateCounter {
+public class CalendarHourRateCounter implements RateCounter {
 	
 	// VARIABLES ----------------------------------------------------- //
 	
@@ -37,6 +37,7 @@ public class CalendarHourRateCounter {
 	
 	// PUBLIC -------------------------------------------------------- //
 	
+	@Override
 	public synchronized void request() {
 		if (hour == null || LocalDateTime.now().isAfter(hour.plusHours(1))) {
 			reset();
@@ -64,6 +65,7 @@ public class CalendarHourRateCounter {
 		}
 	}
 	
+	@Override
 	public synchronized void halt(LocalDateTime haltAt) {
 		if (haltAt.getHour() == hour.getHour()) {
 			halted = true;
