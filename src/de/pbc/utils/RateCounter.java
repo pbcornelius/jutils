@@ -10,4 +10,8 @@ public interface RateCounter {
 	
 	public void halt(LocalDateTime haltAt);
 	
+	public void restart();
+	
+	public void reset();
+	
 }

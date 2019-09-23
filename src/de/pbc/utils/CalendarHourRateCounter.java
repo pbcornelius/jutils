@@ -40,7 +40,7 @@ public class CalendarHourRateCounter implements RateCounter {
 	@Override
 	public synchronized void request() {
 		if (hour == null || LocalDateTime.now().isAfter(hour.plusHours(1))) {
-			reset();
+			restart();
 		}
 		
 		long waitTime;
@@ -72,12 +72,16 @@ public class CalendarHourRateCounter implements RateCounter {
 		}
 	}
 	
-	// PRIVATE ------------------------------------------------------- //
-	
-	private synchronized void reset() {
+	@Override
+	public synchronized void restart() {
 		hour = LocalDateTime.now().with(StartOfHour.INST);
 		requests = 0;
 		halted = false;
+	}
+	
+	@Override
+	public synchronized void reset() {
+		hour = null;
 	}
 	
 	// INNER CLASSES ------------------------------------------------- //

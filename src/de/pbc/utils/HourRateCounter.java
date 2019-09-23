@@ -8,6 +8,8 @@ import java.time.temporal.ChronoUnit;
  *   stay within the specified rate limit per hour (counted from the
  *   first request).
  * - The method halt() halts all future executions for the current hour.
+ * - restart() restarts the hour and reset the request counter.
+ * - After reset(), the next call to request() will restart the hour.
  */
 public class HourRateCounter implements RateCounter {
 	
@@ -36,7 +38,7 @@ public class HourRateCounter implements RateCounter {
 	@Override
 	public synchronized void request() {
 		if (hour == null || LocalDateTime.now().isAfter(hour.plusHours(1))) {
-			reset();
+			restart();
 		}
 		
 		long waitTime;
@@ -68,12 +70,16 @@ public class HourRateCounter implements RateCounter {
 		}
 	}
 	
-	// PRIVATE ------------------------------------------------------- //
-	
-	private synchronized void reset() {
+	@Override
+	public synchronized void restart() {
 		hour = LocalDateTime.now();
 		requests = 0;
 		halted = false;
+	}
+	
+	@Override
+	public synchronized void reset() {
+		hour = null;
 	}
 	
 }
