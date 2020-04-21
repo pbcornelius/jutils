@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 /**
  * String utils.
@@ -181,7 +180,29 @@ public class StringUtils {
 		
 	}
 	
+	/**
+	 * Reads an {@code InputStream} into a {@code String}.
+	 * 
+	 * Same as {@link #toString(InputStream, String, boolean)} with
+	 * {@code utfFix = true}.
+	 * 
+	 * @see #toString(InputStream, String, boolean)
+	 */
 	public static String toString(InputStream inputStream, String charset) throws IOException {
+		return toString(inputStream, charset, true);
+	}
+	
+	/**
+	 * Reads an {@code InputStream} into a {@code String}.
+	 * 
+	 * @param utfFix if {@code true} and {@code charset} is UTF-8, parses the
+	 *            {@code inputStream} as {@code ISO-8859-1} if it
+	 *            would contain {@code \uFFFD} otherwise
+	 * @throws IOException if {@code charset} is UTF-8, {@code utfFix} is
+	 *             {@code false}, and
+	 *             {@code inputStream} contains {@code \uFFFD}
+	 */
+	public static String toString(InputStream inputStream, String charset, boolean utfFix) throws IOException {
 		try {
 			ByteArrayOutputStream result = new ByteArrayOutputStream();
 			byte[] buffer = new byte[1024];
@@ -189,7 +210,21 @@ public class StringUtils {
 			while ((length = inputStream.read(buffer)) != -1) {
 				result.write(buffer, 0, length);
 			}
-			return result.toString(StandardCharsets.UTF_8);
+			
+			String str = result.toString(charset);
+			
+			// \uFFFD is the REPLACEMENT CHARACTER which means Unicode couldn't parse a character
+			if (charset.toLowerCase().equals("utf-8") && str.contains("\uFFFD")) {
+				if (utfFix) {
+					str = result.toString("ISO-8859-1");
+				} else {
+					throw new IOException(
+							"The InputStream was parsed as UTF-8 but contains characters that are not UTF-8."
+									+ " Set utfFix=true to parse the string as ISO-8859-1.");
+				}
+			}
+			
+			return str;
 		} finally {
 			inputStream.close();
 		}
