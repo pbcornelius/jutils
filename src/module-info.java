@@ -2,6 +2,8 @@ module de.pbc.utils {
 
 	exports de.pbc.utils;
 
+	exports de.pbc.utils.test;
+
 	exports de.pbc.utils.csv;
 
 	requires java.xml;
@@ -11,5 +13,7 @@ module de.pbc.utils {
 	requires static org.apache.commons.lang3;
 
 	requires static org.apache.commons.io;
+
+	requires static org.junit.jupiter.api;
 
 }
