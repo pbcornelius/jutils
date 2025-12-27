@@ -1,0 +1,4 @@
+<factorypath>
+    <factorypathentry kind="WKSPJAR" id="/Libraries/log4j/log4j-core-2.14.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="WKSPJAR" id="/Libraries/log4j/log4j-api-2.14.1.jar" enabled="true" runInBatchMode="false"/>
+</factorypath>
