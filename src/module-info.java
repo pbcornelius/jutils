@@ -14,4 +14,10 @@ module de.pbc.utils {
 
 	requires static org.junit.jupiter.api;
 
+	// log4j filter
+
+	requires static org.apache.logging.log4j;
+
+	requires static org.apache.logging.log4j.core;
+
 }
