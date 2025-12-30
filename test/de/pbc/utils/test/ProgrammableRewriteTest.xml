@@ -4,9 +4,11 @@
 <Configuration status="WARN" packages="de.pbc.utils">
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
+			<ThresholdFilter level="INFO"/> 
 			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS}\t%-5p\t%c{1.}%n%msg%n"/>
 		</Console>
 		<RollingFile name="RollingFile" filePattern="logs/igs-%d{yyyy-MM-dd}-%i.log">
+			<ThresholdFilter level="INFO"/> 
 			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS}\t%-5p\t%c{1.}%n%msg%n"/>
 			<Policies>
   				<OnStartupTriggeringPolicy />
@@ -19,7 +21,7 @@
 		</Rewrite>
 	</Appenders>
 	<Loggers>
-		<Root level="info">
+		<Root level="INFO">
 			<AppenderRef ref="REWRITE"/>
 		</Root>
 	</Loggers>
