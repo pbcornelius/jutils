@@ -37,7 +37,7 @@ class ProgrammableRewriteTest {
 		try (TemporaryRewriter tr = ProgrammableRewrite.getInstance().addTemporaryRewriter(new Function<>() {
 			@Override
 			public LogEvent apply(LogEvent t) {
-				return new Log4jLogEvent.Builder(t).setLevel(Level.ERROR).build();
+				return new Log4jLogEvent.Builder(t).setLevel(Level.DEBUG).build();
 			}
 		})) {
 			log.info("info3");

@@ -4,17 +4,28 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Core;
 import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.appender.rewrite.RewriteAppender;
 import org.apache.logging.log4j.core.appender.rewrite.RewritePolicy;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.config.plugins.PluginFactory;
+import org.apache.logging.log4j.core.filter.ThresholdFilter;
 
 /**
  * A programmable {@link RewritePolicy}. Use as {@code <ProgrammableRewrite/>}
  * and {@code packages="de.pbc.utils"}. Creates a single instance which is used
  * everywhere. Rewriters are applied in the order returned by
- * {@link #getRewriters()}.
+ * {@link #getRewriters()}.<br/>
+ * <br/>
+ * If you modify the {@link Level}, bear in mind that {@link Level} checking is
+ * done in the order given by the configuration. {@link Level} checking within
+ * the parent {@link RewriteAppender} is done before any {@link RewritePolicy
+ * RewritePolicies} are applied. So, if a changed {@link Level} should be
+ * reflected in the output, a {@link ThresholdFilter} needs to be added to
+ * downstream {@link Appender}s.
  */
 @Plugin(name = "ProgrammableRewrite", category = Core.CATEGORY_NAME)
 public class ProgrammableRewrite implements RewritePolicy {
